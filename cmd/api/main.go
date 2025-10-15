@@ -1,11 +1,21 @@
 package main
 
-import "log"
+import (
+	"AskharovA/go-social-project/internal/env"
+	"log"
+
+	"github.com/joho/godotenv"
+)
 
 func main() {
-	cfg := Config{
-		addr: ":8080",
+	if err := godotenv.Load(); err != nil {
+		log.Println("Warning: .env file not found")
 	}
+
+	cfg := Config{
+		addr: env.GetString("ADDR", ":8080"),
+	}
+
 	app := &Application{
 		config: cfg,
 	}
